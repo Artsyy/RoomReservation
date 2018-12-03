@@ -1,0 +1,23 @@
+<!-- doc that prints out the titles of the table from columns in the db -->
+
+<html>
+   <body>
+      
+      <form action = "{{ url_for('adding') }}" method = "POST">
+         <h3>Room Information</h3>
+         Building<br>
+         <input type = "text" name = "building" /></br>
+         
+         Room_Number<br>
+         <input type = "text" name = "room_number" /></br>
+         
+         Capacity<br>
+         <input type = "text" name = "capacity" /><br>
+         
+         Description<br>
+         <input type = "text" name = "description" /><br>
+         <input type = "submit" value = "submit" /><br>
+      </form>
+      
+   </body>
+</html>
