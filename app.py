@@ -74,12 +74,14 @@ def deleteReserve():
       conn = sql.connect(database)
       cur = conn.cursor()
       cur.execute("""DELETE FROM reservation WHERE date = ? 
-         AND start_time = ? AND end_time = ? AND organizer_id = ?""", 
+         AND start_time >= ? AND end_time <= ? AND organizer_id = ?""", 
          (date, start, end, host) )
-      row = cur.fetchone()
-      return row[0]
+      msg = "Delete Success"
+      return render_template("result.html",msg = msg)
    except Error as e:
       print(e)
+      msg = "Deletion Failed"
+      return render_template("result.html",msg = msg)
 
 @app.route('/makeReserve', methods = ['POST', 'GET'])
 def makeReserve():
