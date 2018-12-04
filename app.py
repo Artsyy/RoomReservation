@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return "this is a test"
+	return render_template('index.html')
 
 @app.route('/enternew')
 def newRoom():
