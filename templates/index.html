@@ -1,0 +1,19 @@
+<html>
+   <body>
+      <form action = "{{ url_for('search') }}" method = "POST">
+        <h3>Room Information</h3>
+        Building<br>
+        <input type = "text" name = "building" /></br>
+
+        Room Number<br>
+        <input type = "text" name = "room_number" /><br>
+
+        Capacity<br>
+        <input type = "text" name = "capacity" /><br>
+
+        Room Type<br>
+        <input type = "text" name = "room_type" /><br>
+        <input type = "submit" value = "submit" /><br>
+      </form>
+   </body>
+</html>
