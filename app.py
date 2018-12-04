@@ -7,7 +7,7 @@ app.secret_key = "db project"
 @app.route('/')
 def index():
     return render_template('index.html')
- 
+
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
 	if request.method == 'POST':
@@ -15,42 +15,33 @@ def search():
 			building = request.form['building']
 			room_number = request.form['room_number']
 			capacity = request.form['capacity']
-			room_type = request.form['room_type']
 
-			with sql.connect("classroomManager.db") as con:
-				cur = con.cursor()
-				cur.execute("SELECT * FROM room WHERE building = ? OR room_number = ?", (building,room_number,))
+			with sql.connect("classroomManager.db") as conn:
+				cur = conn.cursor()
+				cur.execute("SELECT * FROM room WHERE building = ? OR room_number = ? OR capacity = ?", (building,room_number,capacity,))
 
 				rows = cur.fetchall()
-				#print(rows)
-				print(building)
-				print(room_number)
+				conn.commit()
+				conn.row_factory = sql.Row
 
-				con.commit()
+				cur = conn.cursor()
+				cur.execute("SELECT * FROM room WHERE building = ? OR room_number = ? OR capacity = ?", (building,room_number,capacity,))
 
-				con.row_factory = sql.Row
+				rows = cur.fetchall()
 
-				cur = con.cursor()
-				cur.execute("SELECT * FROM room WHERE building = ? OR room_number = ?", (building,room_number,))
-
-				rows = cur.fetchall();
-
-				print(building)
-				print(room_number)
-			
 				return render_template("lists.html", rows = rows)
-				con.close()
-
+				conn.close()
+		
 		except:
-			con.rollback()
-			msg = "error in search operation"
+			conn.rollback()
 			return ''
+
 
 # @app.route('/enternew')
 # def newRoom():
 #    return render_template('room.html')
 
-"""don't need this functionality just testing if the db can be modified but look @ this if want to add reservations"""
+# """don't need this functionality just testing if the db can be modified but look @ this if want to add reservations"""
 # @app.route('/adding', methods = ['POST', 'GET'])
 # def adding():
 # 	if request.method == 'POST':
