@@ -8,9 +8,6 @@ app.secret_key = "db project"
 reserve_id = 0
 database = "classroomManager.db"
 
-reserve_id = 0
-database = "classroomManager.db"
-
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -22,21 +19,6 @@ def reserve():
 @app.route('/dReserve')
 def dReserve():
    return render_template('dReserve.html')
-
-@app.route('/showReserve')
-def showReserve():
-   try:
-      con = sql.connect("classroomManager.db")
-      con.row_factory = sql.Row
-      
-      cur = con.cursor()
-      cur.execute("Select * From reservation")
-      
-      rows = cur.fetchall(); 
-      # return render_template("list.html", rows = rows)
-      return render_template("showReserve.html", rows = rows)
-   except Error as e:
-      print(e)
 
 # def initialize_variables():
 #    global reserve_id
