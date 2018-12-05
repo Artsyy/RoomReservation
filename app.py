@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 import sqlite3 as sql
+from sqlite3 import Error
 
 app = Flask(__name__)
 app.secret_key = "db project"
@@ -13,11 +14,26 @@ def index():
 
 @app.route('/reserve')
 def reserve():
-   return render_template('reserve.html')
+	return render_template('reserve.html')
 
 @app.route('/dReserve')
 def dReserve():
 	return render_template('dReserve.html')
+
+@app.route('/showReserve')
+def showReserve():
+   try:
+      con = sql.connect("classroomManager.db")
+      con.row_factory = sql.Row
+      
+      cur = con.cursor()
+      cur.execute("Select * From reservation")
+      
+      rows = cur.fetchall(); 
+      # return render_template("list.html", rows = rows)
+      return render_template("showReserve.html", rows = rows)
+   except Error as e:
+	  print(e)
 
 def validate(building, room, date, t1, t2):
    try: 
@@ -50,7 +66,6 @@ def getUser(name, email):
       return row[0]
    except Error as e:
       print(e)
-
 
 @app.route('/deleteReserve', methods = ['POST', 'GET'])
 def deleteReserve():
@@ -110,9 +125,12 @@ def makeReserve():
       msg = "Request invalid, conflict with existing reservation. Or the desired location does not exist"
       return render_template("result.html",msg = msg)
 
+@app.route('/lookup')
+def lookup():
+	return render_template("search.html")
 
-@app.route('/search', methods = ['POST', 'GET'])
-def search():
+@app.route('/search_results', methods = ['POST', 'GET'])
+def search_results():
 	if request.method == 'POST':
 		try:
 			building = request.form['building']
@@ -132,7 +150,7 @@ def search():
 
 				rows = cur.fetchall()
 
-				return render_template("lists.html", rows = rows)
+				return render_template("list.html", rows = rows)
 				conn.close()
 		
 		except:
@@ -140,7 +158,7 @@ def search():
 			return ''
 
 """shows the the total list of all the rooms if user doesn't want to search"""
-@app.route('/list')
+@app.route('/lists')
 def list():
    con = sql.connect("classroomManager.db")
    con.row_factory = sql.Row
