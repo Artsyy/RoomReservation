@@ -1,0 +1,31 @@
+<!-- this doc creates the table to show all the rooms available -->
+
+<!doctype html>
+<html>
+   <body>
+      <table border = 2 style="float: right">
+         <thead>
+            <td>Building</td>
+            <td>Room</td>
+            <td>Date</td>
+            <td>Start Time</td>
+            <td>End Time</td>
+         </thead>
+         
+         {% for row in rows%}
+            <tr>
+               <td>{{row["building"]}}</td>
+               <td>{{row["room_number"]}}</td>
+               <td>{{row["date"]}}</td>
+               <td> {{row["start_time"]}}</td>
+               <td>{{row['end_time']}}</td>	
+            </tr>
+         {% endfor %}
+      </table>
+      
+      <a href="/reserve">Make a reservation</a>
+      <a href="/dReserve">Delete existing Reservation</a>
+      <a href = "/">Go back to home page</a>
+      
+   </body>
+</html>

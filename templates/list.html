@@ -3,8 +3,7 @@
 <!doctype html>
 <html>
    <body>
-   
-      <table border = 1>
+      <table border = 1 style="float: left">
          <thead>
             <td>Building</td>
             <td>Room</td>
@@ -17,12 +16,14 @@
                <td>{{row["building"]}}</td>
                <td>{{row["room_number"]}}</td>
                <td> {{row["capacity"]}}</td>
-               <td>{{row['description']}}</td>	
+               <td>{{row['description']}}</td>  
             </tr>
          {% endfor %}
       </table>
+      <a href="/reserve">Make a reservation</a><br>
+      <a href="/dReserve">Delete existing Reservation</a><br>
+      <a href = "/">Go back to home page</a><br>
       
-      <a href = "/">Go back to home page</a>
-      
+
    </body>
 </html>
